@@ -1,0 +1,26 @@
+### 获取用户列表
+GET http://127.0.0.1:8010/nihil-auth/user/list
+
+
+### 删除一个用户
+DELETE http://127.0.0.1:8010/nihil-auth/user?uid=5
+
+
+### 创建一个用户
+POST http://127.0.0.1:8010/nihil-auth/user
+Content-Type: application/json
+
+{
+  "username":"小E",
+  "password":"123456"
+}
+
+### 编辑用户
+PUT http://127.0.0.1:8010/nihil-auth/user
+Content-Type: application/json
+
+{
+  "id": 6,
+  "username":"EE",
+  "password":"123456"
+}

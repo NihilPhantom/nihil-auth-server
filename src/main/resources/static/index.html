@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统中台</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        table{
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        td{
+            border: 1px solid;
+        }
+        body{
+            background: #9c9c9c;
+        }
+        .flex_box{
+            display: flex;
+        }
+        #left-nav{
+            width: 300px;
+            height: 100vh;
+            margin-right: 2px;
+            background: white;
+        }
+        #main-container{
+            background: white;
+            flex-grow: 1;
+        }
+        #left-nav li{
+            cursor: pointer;
+        }
+        #left-nav li:hover{
+            background: #eee;
+        }
+
+        /* 树状组件 */
+        .tree-node-1{
+            padding-left: 10px;
+        }
+        .tree-node-2{
+            padding-left: 30px;
+        }
+
+    </style>
+
+    <script src="./js/login.js"></script>
+    <script src="./js/role.js"></script>
+    <script src="./js/cache.js"></script>
+    <script src="./js/user.js"></script>
+</head>
+<body>
+<div class="flex_box">
+    <div>
+        <ul id="left-nav">
+            <li id="login-key">用户登录</li>
+            <li id="role-key">角色管理</li>
+            <li id="cache-key">缓存展示</li>
+            <li id="user-key">用户管理</li>
+        </ul>
+    </div>
+    <div id="main-container">
+
+
+    </div>
+</div>
+<script>
+    let baseConfig = { baseURL:"/nihil-auth", target:"main-container" }
+    new Login({...baseConfig, handler:"login-key"})
+    new Role({...baseConfig, handler:"role-key"})
+    new Cache({...baseConfig, handler:"cache-key"})
+    new User({...baseConfig, handler:"user-key"})
+
+</script>
+</body>
+</html>

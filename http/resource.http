@@ -1,0 +1,7 @@
+### 扫描服务器现有资源，并进行展示
+GET http://127.0.0.1:8010/nihil-auth/res/resOnline
+
+### 获取用户直接掌控的资源
+GET http://127.0.0.1:8010/nihil-auth/res/user?uid=1
+
+###

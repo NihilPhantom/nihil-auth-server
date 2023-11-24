@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nihil.auth.mapper.AuthRoleMapper">
+
+    <insert id="addRole">
+        INSERT INTO auth_role(name) VALUES (#{name})
+    </insert>
+    <insert id="addRoleResList">
+        INSERT INTO auth_role_res (role_id, resource_id) VALUES
+        <foreach collection="resIdList" item="resId" separator=",">
+            (#{roleId}, #{resId})
+        </foreach>
+    </insert>
+
+    <insert id="addUserRoleList">
+        INSERT INTO auth_user_role (user_id, role_id) VALUES
+        <foreach collection="newRoleIdList" item="roleId" separator=",">
+            (#{uid}, #{roleId})
+        </foreach>
+    </insert>
+
+    <update id="changeRole">
+        UPDATE auth_role SET name = #{name} WHERE id = #{id}
+    </update>
+
+    <delete id="deleteRoleResList">
+        DELETE FROM auth_role_res WHERE role_id = #{roleId} AND resource_id in
+        <foreach collection="resIdList" item="resId" separator="," open="(" close=")">
+            #{resId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAllRoleByUserId">
+        DELETE FROM auth_role_res WHERE role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteRole">
+        DELETE FROM auth_role WHERE id = #{id}
+    </delete>
+
+    <delete id="delUserRoleList">
+        DELETE FROM auth_user_role WHERE user_id = #{uid} AND role_id IN
+        <foreach collection="needDeleteRoleIdList" open="(" separator="," close=")" item="roleId">
+            #{roleId}
+        </foreach>
+    </delete>
+
+    <select id="getRoleList" resultType="com.nihil.auth.entity.AuthRole">
+        SELECT * FROM auth_role
+    </select>
+
+    <select id="getResListByRoleId" resultType="com.nihil.auth.entity.AuthRoleRes">
+        SELECT * FROM auth_role_res WHERE role_id = #{roleId}
+    </select>
+
+    <select id="getRoleListByUid" resultType="com.nihil.auth.entity.AuthRole">
+        SELECT *
+        FROM auth_role
+        WHERE id in (SELECT role_id FROM auth_user_role WHERE user_id = #{uid})
+    </select>
+
+    <select id="getRoleIdListByUid" resultType="java.lang.Integer">
+        SELECT role_id FROM auth_user_role WHERE user_id = #{uid}
+    </select>
+
+</mapper>

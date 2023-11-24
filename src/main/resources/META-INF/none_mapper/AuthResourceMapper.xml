@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nihil.auth.mapper.AuthResourceMapper">
+
+    <insert id="addUserResource">
+        INSERT INTO auth_user_res (uid, res_id) VALUES (#{uid}, #{rid});
+    </insert>
+
+    <insert id="addResource">
+        INSERT INTO auth_resource (des, url, method, permanent) VALUES (#{des}, #{url}, #{method}, #{permanent});
+    </insert>
+
+    <insert id="addResList" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        INSERT INTO auth_resource (url, method, permanent) VALUES
+        <foreach collection="addResList" item="res" separator=",">
+            (#{res.url}, #{res.method}, b'0')
+        </foreach>
+    </insert>
+
+    <insert id="addUserResList">
+        INSERT INTO auth_user_res (uid, res_id) VALUES
+        <foreach collection="newResIdList" item="resId" separator=",">
+            (#{uid}, #{resId})
+        </foreach>
+    </insert>
+
+    <update id="addResToWhiteList">
+        UPDATE auth_resource SET permanent = b'1' WHERE id = #{resId}
+    </update>
+
+    <update id="removeResFromWhiteList">
+        UPDATE auth_resource SET permanent = b'0' WHERE id = #{resId}
+    </update>
+
+    <delete id="delResList">
+        DELETE FROM auth_resource WHERE id IN
+              <foreach collection="redundantResIdList" open="(" separator="," close=")" item="item">
+                  #{item.id}
+              </foreach>
+    </delete>
+    <delete id="delUserResList">
+        DELETE FROM auth_user_res WHERE uid = #{uid} AND res_id IN
+        <foreach collection="needDeleteResIdList" open="(" separator="," close=")" item="resId">
+            #{resId}
+        </foreach>
+    </delete>
+
+    <select id="getRoleUrlByUser" resultType="com.nihil.auth.pojo.AuthRoleUrl">
+        SELECT DISTINCTROW user_id, url
+        FROM (SELECT * FROM auth_user_role WHERE user_id = #{userId}) AS aur
+                 LEFT JOIN auth_role_res ON aur.role_id = auth_role_res.role_id
+                 LEFT JOIN auth_resource ON auth_role_res.resource_id = auth_resource.id;
+    </select>
+
+    <select id="getResource" resultType="com.nihil.auth.entity.AuthResource">
+        SELECT * FROM auth_resource;
+    </select>
+
+    <select id="getListByUid" resultType="java.lang.Long">
+        SELECT res_id FROM auth_user_res WHERE uid = #{uid}
+    </select>
+
+    <select id="getDirectResourceByUid" resultType="com.nihil.auth.entity.AuthResource">
+        SELECT *
+        FROM auth_resource
+        WHERE id
+            in (SELECT res_id FROM auth_user_res WHERE uid = #{uid})
+    </select>
+
+</mapper>

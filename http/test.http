@@ -1,0 +1,26 @@
+###
+POST http://127.0.0.1:8010/client/login
+Content-Type: application/json
+
+{
+  "clientId": "1",
+  "clientSecret": "123456"
+}
+
+
+###
+POST http://127.0.0.1:8010/auth/login
+Content-Type: application/json
+
+{
+    "username":"nihil",
+    "password":"123456"
+}
+
+###
+GET http://127.0.0.1:8006/test
+token:1b38dd7c12304ae680f9be0fa002b4d7
+
+
+###
+GET http://127.0.0.1:8010/nihil-auth/auth/role_and_res?uid=1

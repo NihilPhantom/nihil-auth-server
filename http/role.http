@@ -1,0 +1,23 @@
+#set($token = "db41e25b5a67424e96a1492b91a8750f")
+
+### 获取角色role所拥有的所有资源
+GET http://127.0.0.1:8010/nihil-auth/role/
+
+
+### 获取用户所拥有的所有资源
+GET http://127.0.0.1:8010/nihil-auth/role/user?uid=1
+
+
+### 创建一个新的角色
+POST http://127.0.0.1:8010/nihil-auth/role
+Content-Type: application/json
+token: $token
+
+{
+  "name":"测试员"
+}
+
+
+### 删除一个角色
+DELETE http://127.0.0.1:8010/nihil-auth/role?roleId=5
+token: $token

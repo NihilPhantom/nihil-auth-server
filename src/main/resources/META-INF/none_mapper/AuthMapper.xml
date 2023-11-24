@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nihil.auth.mapper.AuthMapper">
+
+    <select id="getRoleUrlByUser" resultType="com.nihil.auth.pojo.AuthRoleUrl">
+        SELECT DISTINCTROW user_id, url
+        FROM (SELECT * FROM auth_user_role WHERE user_id = #{userId}) AS aur
+        LEFT JOIN auth_role_res ON aur.role_id = auth_role_res.role_id
+        LEFT JOIN auth_resource ON auth_role_res.resource_id = auth_resource.id;
+    </select>
+
+    <select id="getUserRoleByUser" resultType="com.nihil.auth.entity.AuthUserRoleKey">
+        SELECT au.id user_id, role_id
+        FROM (SELECT id FROM auth_user WHERE user_name = #{userName} AND `password` = #{password}) AS au
+        LEFT JOIN auth_user_role ON au.id = auth_user_role.user_id
+    </select>
+
+    <select id="getRoleByUserId" resultType="com.nihil.auth.entity.AuthUserRoleKey">
+        SELECT *
+        FROM auth_user_role WHERE user_id = #{userId}
+    </select>
+
+    <select id="getAllRoleUrl" resultType="com.nihil.auth.pojo.AuthRoleUrl">
+        SELECT DISTINCTROW role_id, url FROM auth_role_res
+        LEFT JOIN auth_resource ON auth_role_res.resource_id = auth_resource.id;
+    </select>
+
+    <delete id="deleteRoleUrl" >
+        DELETE FROM auth_role_res WHERE role_id = 1 AND resource_id NOT IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
