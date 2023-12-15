@@ -17,7 +17,6 @@ import java.util.List;
 
 @Service
 public class AuthRoleServiceImpl implements AuthRoleService {
-
     @Resource
     AuthRoleMapper authRoleMapper;
 
