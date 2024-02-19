@@ -40,6 +40,7 @@ public class AuthDataSourceConfig {
         System.arraycopy(resources2, 0, allResources, resources1.length, resources2.length);
 
         sessionFactory.setMapperLocations(allResources);
+        sessionFactory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true); // 开启下划线转小驼峰
         return sessionFactory.getObject();
     }
 }

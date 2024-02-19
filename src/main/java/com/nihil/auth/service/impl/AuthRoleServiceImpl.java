@@ -30,10 +30,9 @@ public class AuthRoleServiceImpl implements AuthRoleService {
         List<Integer> roleIdList = authRoleMapper.getRoleList().stream().map(AuthRole::getId).toList();
         for(Integer roleId: roleIdList){
             List<AuthRoleRes> resList = authRoleMapper.getResListByRoleId(roleId);
-            if(resList != null){
+            if(resList != null && resList.size()!=0){
                 cacheService.addRoleResTie(roleId, resList.stream().map(AuthRoleRes::getResourceId).toList());
             }
-
         }
     }
 

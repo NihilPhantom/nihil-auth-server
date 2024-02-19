@@ -69,7 +69,7 @@
     </div>
 </div>
 <script>
-    let baseConfig = { baseURL:"/nihil-auth", target:"main-container" }
+    let baseConfig = { baseURL:".", target:"main-container" }
     new Login({...baseConfig, handler:"login-key"})
     new Role({...baseConfig, handler:"role-key"})
     new Cache({...baseConfig, handler:"cache-key"})

@@ -24,67 +24,7 @@ Mysql 8.x     （开发使用 8.0.22）
 □ 多租户
 
 ## 使用方法
-1、运行 sql/nihil_auth.sql 在 Mysql 中创建数据表
-
-2、将此项目作为一个【模块】引入到项目的 pom 文件中，斌且引入Nihil 系列通用的实体类和工具类，以下是一个项目的pom文件案例
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.nihil</groupId>
-    <artifactId>orderfile-sever</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
-        <relativePath/>
-    </parent>
-
-    <modules>
-        <module>nihil-common-utils</module>
-        <module>nihil-common-entity</module>
-        <module>your-project</module>
-        <module>nihil-auth-server</module>
-    </modules>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <spring-cloud.version>2022.0.3</spring-cloud.version>
-        <spring-cloud-alibaba-version>2022.0.0.0-RC2</spring-cloud-alibaba-version>
-    </properties>
-
-    <!-- spring-cloud 依赖声明 -->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-</project>
-```
-
-3、在你的项目 `your-project` 中添加对 nihil-auth-server 的依赖 即可实现权限控制
-```xml
-<dependency>
-    <groupId>com.nihil</groupId>
-    <artifactId>nihil-auth-server</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <scope>compile</scope>
-</dependency>
-```
+详见 [doc/使用说明.md](doc/使用说明.md)
 
 ## 更新说明
 2023-11-24：初始化项目，基础服务和前端页面 
